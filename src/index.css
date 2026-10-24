@@ -1,0 +1,64 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --font-serif: 'DM Serif Display', Georgia, serif;
+    --font-sans: 'Manrope', system-ui, -apple-system, sans-serif;
+    --font-mono: 'IBM Plex Mono', monospace;
+
+    /* Editorial Palette Design Tokens */
+    --color-porcelain: #F4F0E6;
+    --color-aubergine: #302335;
+    --color-oxide: #BD4938;
+    --color-olive: #747D50;
+    --color-lilac: #B8A9C5;
+    --color-ochre: #D3AA57;
+    --color-warm-grey: #8D867F;
+    --color-paper: #FFFDF8;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    background-color: var(--color-porcelain);
+    color: var(--color-aubergine);
+  }
+
+  h1, h2, h3, .font-serif {
+    font-family: var(--font-serif);
+  }
+
+  code, pre, .font-mono {
+    font-family: var(--font-mono);
+  }
+}
+
+/* Editorial parchment scrollbar */
+::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+::-webkit-scrollbar-track {
+  background: #EAE4D5;
+}
+::-webkit-scrollbar-thumb {
+  background: #C8BEAC;
+  border-radius: 2px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #8D867F;
+}
+
+/* Subtle newspaper / ledger rule utility */
+.ledger-rule {
+  border-bottom: 1px solid rgba(48, 35, 53, 0.15);
+}
+
+.ledger-rule-thick {
+  border-bottom: 2px solid #302335;
+}
+
+.ledger-double-rule {
+  border-bottom: 3px double #302335;
+}
+
+

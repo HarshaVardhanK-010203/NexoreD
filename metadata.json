@@ -1,0 +1,6 @@
+{
+  "name": "CiviNexus AI",
+  "description": "Civic Root-Cause Intelligence Platform for YUKTHI 2026 by Team NEXORA. Connecting complaints, uncovering systemic causes, and prioritizing municipal investigations with explainable spatial-temporal clustering and human verification.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

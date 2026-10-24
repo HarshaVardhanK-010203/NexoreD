@@ -58,6 +58,32 @@ export type VerificationState =
   | 'confirmed_finding'
   | 'dismissed';
 
+export interface PredictiveCostBreakdownItem {
+  amount: number;
+  label: string;
+}
+
+export interface PredictiveTimeBreakdownItem {
+  hours: number;
+  label: string;
+}
+
+export interface PredictiveImpactEstimate {
+  impactScore: number; // 0 - 100 Index
+  impactTier: 'transformative' | 'substantial' | 'moderate' | 'marginal';
+  estimatedCostSavedMin: number; // in INR
+  estimatedCostSavedMax: number;
+  currency: string;
+  timeSavedDays: number;
+  crewHoursSaved: number;
+  incidentRecurrenceReductionPercent: number; // e.g. 85%
+  rootCauseInterventionCost: number; // estimated cost to fix the actual root cause once
+  roiMultiplier: number;
+  costBreakdown: PredictiveCostBreakdownItem[];
+  timeBreakdown: PredictiveTimeBreakdownItem[];
+  methodologyBasis: string;
+}
+
 export interface CandidateCause {
   id: string;
   title: string;
@@ -68,6 +94,7 @@ export interface CandidateCause {
   plausibility: CandidatePlausibility;
   verificationState: VerificationState;
   suggestedAction: string;
+  predictiveImpact?: PredictiveImpactEstimate;
   verifiedBy?: string;
   verifiedTimestamp?: string;
 }

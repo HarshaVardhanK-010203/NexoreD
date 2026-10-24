@@ -226,6 +226,30 @@ function deriveCandidateCauses(reports: CivicReport[], sector: string): Candidat
       verificationState: 'unverified_hypothesis',
       suggestedAction:
         'Dispatch Municipal Drainage Taskforce with suction jetting vehicle to clear culvert; take asphalt core drill sample to test sub-base moisture content.',
+      predictiveImpact: {
+        impactScore: 92,
+        impactTier: 'transformative',
+        estimatedCostSavedMin: 480000,
+        estimatedCostSavedMax: 720000,
+        currency: '₹',
+        timeSavedDays: 26,
+        crewHoursSaved: 180,
+        incidentRecurrenceReductionPercent: 88,
+        rootCauseInterventionCost: 65000,
+        roiMultiplier: 8.5,
+        costBreakdown: [
+          { amount: 280000, label: '8x recurring emergency cold-patching callouts avoided' },
+          { amount: 350000, label: 'Pavement sub-base granular WBM wash-out reconstruction avoided' },
+          { amount: 90000, label: 'Stormwater suction tanker & mobile pumping deployments averted' },
+        ],
+        timeBreakdown: [
+          { hours: 140, label: 'Public works road crew emergency patching & barricading hours' },
+          { hours: 40, label: 'Zonal engineering surveyor diagnostic & inspection hours' },
+          { hours: 180, label: 'Commuter & bus lane transit delay hours prevented' },
+        ],
+        methodologyBasis:
+          '12-month lifecycle comparison of recurring reactive bituminous patches vs. one-time hydraulic culvert desilting and sub-base stabilization.',
+      },
     });
   }
 
@@ -255,6 +279,30 @@ function deriveCandidateCauses(reports: CivicReport[], sector: string): Candidat
       verificationState: 'unverified_hypothesis',
       suggestedAction:
         'Issue stop-work notice and demand immediate trench re-excavation, lime stabilization, and mechanical compaction from the contracting telecommunications provider.',
+      predictiveImpact: {
+        impactScore: 84,
+        impactTier: 'substantial',
+        estimatedCostSavedMin: 320000,
+        estimatedCostSavedMax: 510000,
+        currency: '₹',
+        timeSavedDays: 18,
+        crewHoursSaved: 120,
+        incidentRecurrenceReductionPercent: 82,
+        rootCauseInterventionCost: 45000,
+        roiMultiplier: 7.8,
+        costBreakdown: [
+          { amount: 240000, label: 'Contractor liability re-excavation & compaction recovery' },
+          { amount: 210000, label: 'Shoulder edge longitudinal asphalt shearing repair prevented' },
+          { amount: 60000, label: 'Bus axle damage & vehicle alignment compensation claims avoided' },
+        ],
+        timeBreakdown: [
+          { hours: 90, label: 'Municipal maintenance crew patch hours' },
+          { hours: 30, label: 'Contractor enforcement & right-of-way audit hours' },
+          { hours: 95, label: 'Bus corridor shoulder obstruction delay hours' },
+        ],
+        methodologyBasis:
+          'Based on Municipal Right-of-Way Reinstatement penalty schedules and transit fleet axle damage avoidance.',
+      },
     });
   }
 
@@ -286,6 +334,30 @@ function deriveCandidateCauses(reports: CivicReport[], sector: string): Candidat
       verificationState: 'unverified_hypothesis',
       suggestedAction:
         'Immediately throttle isolating valve V-12; mobilize emergency utility repair crew with GPR scanner to prevent catastrophic road collapse.',
+      predictiveImpact: {
+        impactScore: 96,
+        impactTier: 'transformative',
+        estimatedCostSavedMin: 850000,
+        estimatedCostSavedMax: 1420000,
+        currency: '₹',
+        timeSavedDays: 34,
+        crewHoursSaved: 240,
+        incidentRecurrenceReductionPercent: 94,
+        rootCauseInterventionCost: 95000,
+        roiMultiplier: 11.4,
+        costBreakdown: [
+          { amount: 420000, label: 'Continuous treated drinking water loss (18 m³/h for 30 days averted)' },
+          { amount: 850000, label: 'Catastrophic road sinkhole collapse & structural backfilling prevented' },
+          { amount: 150000, label: 'SCADA booster pump dry-run burn-out protection' },
+        ],
+        timeBreakdown: [
+          { hours: 180, label: 'Emergency utility excavation & water tanker deployment hours' },
+          { hours: 60, label: 'Public health & drinking water quality compliance testing hours' },
+          { hours: 36, label: 'Campus Block water supply outage duration eliminated' },
+        ],
+        methodologyBasis:
+          'Treated municipal potable water tariff rates (₹22/kL) and high-risk underground cavitation structural failure models.',
+      },
     });
   }
 
@@ -316,6 +388,30 @@ function deriveCandidateCauses(reports: CivicReport[], sector: string): Candidat
       verificationState: 'unverified_hypothesis',
       suggestedAction:
         'Pump out chamber; elevate pull-box rim by 150mm above curb line; apply silicone waterproof sealing resin to cable conduit entries.',
+      predictiveImpact: {
+        impactScore: 81,
+        impactTier: 'substantial',
+        estimatedCostSavedMin: 210000,
+        estimatedCostSavedMax: 360000,
+        currency: '₹',
+        timeSavedDays: 14,
+        crewHoursSaved: 95,
+        incidentRecurrenceReductionPercent: 90,
+        rootCauseInterventionCost: 38000,
+        roiMultiplier: 6.8,
+        costBreakdown: [
+          { amount: 140000, label: 'Substation earth fault relay & breaker burnout replacement' },
+          { amount: 130000, label: 'Recurring nightly electrician emergency dispatch & dewatering' },
+          { amount: 90000, label: 'Underpass pedestrian accident & safety liability mitigation' },
+        ],
+        timeBreakdown: [
+          { hours: 75, label: 'Night shift electrician emergency callout hours' },
+          { hours: 20, label: 'Substation circuit diagnostic and megger testing' },
+          { hours: 48, label: 'Underpass darkness hours eliminated across peak commute' },
+        ],
+        methodologyBasis:
+          'Substation breaker replacement schedules, continuous nightly callout labor, and public liability mitigation.',
+      },
     });
   }
 
@@ -339,6 +435,30 @@ function deriveCandidateCauses(reports: CivicReport[], sector: string): Candidat
       verificationState: 'unverified_hypothesis',
       suggestedAction:
         'Assign sector zonal engineer to conduct visual walk-through audit of the entire corridor.',
+      predictiveImpact: {
+        impactScore: 72,
+        impactTier: 'moderate',
+        estimatedCostSavedMin: 150000,
+        estimatedCostSavedMax: 280000,
+        currency: '₹',
+        timeSavedDays: 10,
+        crewHoursSaved: 70,
+        incidentRecurrenceReductionPercent: 75,
+        rootCauseInterventionCost: 30000,
+        roiMultiplier: 5.2,
+        costBreakdown: [
+          { amount: 120000, label: 'Localized defect patching consolidation savings' },
+          { amount: 110000, label: 'Multiple disjointed inspection vehicle trips avoided' },
+          { amount: 50000, label: 'Preventative surface seal preservation' },
+        ],
+        timeBreakdown: [
+          { hours: 50, label: 'Public works maintenance dispatch hours' },
+          { hours: 20, label: 'Zonal inspection coordination hours' },
+          { hours: 30, label: 'Pedestrian and vehicular minor bottleneck hours' },
+        ],
+        methodologyBasis:
+          'Consolidated batch dispatch model vs uncoordinated piecemeal municipal repairs.',
+      },
     });
   }
 
@@ -512,8 +632,16 @@ export function analyzeReports(
     );
 
     let candidateCauses = existing?.candidateCauses;
-    if (!candidateCauses || candidateCauses.length === 0) {
+    if (!candidateCauses || candidateCauses.length === 0 || !candidateCauses.some((c) => c.predictiveImpact)) {
       candidateCauses = deriveCandidateCauses(clusterReports, dominantSector);
+    } else {
+      const freshCauses = deriveCandidateCauses(clusterReports, dominantSector);
+      candidateCauses = candidateCauses.map((c, i) => {
+        if (!c.predictiveImpact && freshCauses[i]?.predictiveImpact) {
+          return { ...c, predictiveImpact: freshCauses[i].predictiveImpact };
+        }
+        return c;
+      });
     }
 
     const clusterTitle =

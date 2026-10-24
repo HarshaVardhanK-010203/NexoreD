@@ -17,6 +17,15 @@ import {
   Send,
   Layers,
   Award,
+  TrendingUp,
+  Clock,
+  Calculator,
+  ChevronDown,
+  ChevronUp,
+  ShieldCheck,
+  FileSpreadsheet,
+  Coins,
+  Sparkles,
 } from 'lucide-react';
 import { formatRelativeTime } from '../utils/geo';
 
@@ -41,6 +50,31 @@ export const RootCauseView: React.FC = () => {
   const [overrideReason, setOverrideReason] = useState('');
   const [showOverrideModal, setShowOverrideModal] = useState(false);
   const [showScoreBreakdown, setShowScoreBreakdown] = useState(false);
+
+  // Predictive Impact Simulation Controls
+  const [trafficVolume, setTrafficVolume] = useState<'arterial' | 'collector' | 'local'>('arterial');
+  const [monsoonExposure, setMonsoonExposure] = useState<'severe' | 'standard' | 'dry'>('standard');
+  const [expandedBreakdownCauseId, setExpandedBreakdownCauseId] = useState<string | null>(null);
+
+  const trafficMultiplier = trafficVolume === 'arterial' ? 1.25 : trafficVolume === 'collector' ? 1.0 : 0.75;
+  const seasonMultiplier = monsoonExposure === 'severe' ? 1.3 : monsoonExposure === 'standard' ? 1.0 : 0.8;
+  const combinedMultiplier = trafficMultiplier * seasonMultiplier;
+
+  const formatINR = (val: number, multiplier = 1) => {
+    const adjusted = Math.round(val * multiplier);
+    if (adjusted >= 100000) {
+      return `₹${(adjusted / 100000).toFixed(2)}L`;
+    }
+    return `₹${adjusted.toLocaleString('en-IN')}`;
+  };
+
+  const formatHours = (hrs: number, multiplier = 1) => {
+    return Math.round(hrs * multiplier);
+  };
+
+  const formatDays = (days: number, multiplier = 1) => {
+    return Math.round(days * multiplier);
+  };
 
   const activeCluster =
     clusters.find((c) => c.id === selectedClusterId) || clusters[0];
@@ -365,6 +399,129 @@ export const RootCauseView: React.FC = () => {
         </div>
       </div>
 
+      {/* Corridor Predictive Impact & Preventative Economics Simulator */}
+      {(() => {
+        const totalCostMin = activeCluster.candidateCauses.reduce(
+          (acc, c) => acc + (c.predictiveImpact?.estimatedCostSavedMin || 0),
+          0
+        );
+        const totalCostMax = activeCluster.candidateCauses.reduce(
+          (acc, c) => acc + (c.predictiveImpact?.estimatedCostSavedMax || 0),
+          0
+        );
+        const totalDaysSaved = activeCluster.candidateCauses.reduce(
+          (acc, c) => acc + (c.predictiveImpact?.timeSavedDays || 0),
+          0
+        );
+        const totalCrewHoursSaved = activeCluster.candidateCauses.reduce(
+          (acc, c) => acc + (c.predictiveImpact?.crewHoursSaved || 0),
+          0
+        );
+        const avgImpactScore = Math.round(
+          activeCluster.candidateCauses.reduce(
+            (acc, c) => acc + (c.predictiveImpact?.impactScore || 70),
+            0
+          ) / (activeCluster.candidateCauses.length || 1)
+        );
+        const primaryCause = activeCluster.candidateCauses[0];
+
+        return (
+          <div className="border-2 border-[#302335] bg-[#FFFDF8] p-5 space-y-4 shadow-xs">
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 border-b border-[#302335]/20 pb-3">
+              <div>
+                <div className="flex items-center gap-2 font-mono text-xs text-[#BD4938] font-bold uppercase tracking-wider mb-1">
+                  <Calculator className="w-4 h-4" />
+                  <span>Predictive Impact & Preventative Municipal Economics</span>
+                </div>
+                <h3 className="font-serif text-xl font-bold text-[#302335]">
+                  Corridor Lifecycle Cost & Time Avoidance Model
+                </h3>
+                <p className="text-xs font-sans text-[#8D867F] mt-0.5">
+                  Quantifying the economic return of curing root civil failures versus perpetual surface patching.
+                </p>
+              </div>
+
+              {/* Scenario Sensitivity Controls */}
+              <div className="flex flex-wrap items-center gap-2 bg-[#FAF7F0] p-2 border border-[#302335]/20 font-mono text-xs">
+                <div className="flex items-center gap-1.5">
+                  <span className="text-[10px] uppercase text-[#8D867F]">Traffic:</span>
+                  <select
+                    value={trafficVolume}
+                    onChange={(e) => setTrafficVolume(e.target.value as any)}
+                    className="bg-[#FFFDF8] border border-[#302335]/30 px-2 py-1 text-xs font-bold text-[#302335] focus:outline-none rounded"
+                  >
+                    <option value="arterial">Arterial (1.25x load)</option>
+                    <option value="collector">Collector (1.0x load)</option>
+                    <option value="local">Local Access (0.75x load)</option>
+                  </select>
+                </div>
+
+                <div className="flex items-center gap-1.5">
+                  <span className="text-[10px] uppercase text-[#8D867F]">Monsoon:</span>
+                  <select
+                    value={monsoonExposure}
+                    onChange={(e) => setMonsoonExposure(e.target.value as any)}
+                    className="bg-[#FFFDF8] border border-[#302335]/30 px-2 py-1 text-xs font-bold text-[#302335] focus:outline-none rounded"
+                  >
+                    <option value="severe">Severe (1.3x saturation)</option>
+                    <option value="standard">Standard Season (1.0x)</option>
+                    <option value="dry">Dry / Minimal (0.8x)</option>
+                  </select>
+                </div>
+
+                <span className="text-[10px] text-[#747D50] font-bold px-1.5 py-0.5 bg-[#FFFDF8] border border-[#747D50]/40 rounded">
+                  Factor: {combinedMultiplier.toFixed(2)}x
+                </span>
+              </div>
+            </div>
+
+            {/* Aggregate KPI Strip */}
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 font-mono">
+              <div className="p-3 bg-[#FAF7F0] border border-[#302335]/20 space-y-1">
+                <span className="text-[11px] text-[#8D867F] uppercase block">Cumulative Cost Saved</span>
+                <div className="text-lg sm:text-xl font-bold text-[#747D50]">
+                  {formatINR(totalCostMin, combinedMultiplier)} – {formatINR(totalCostMax, combinedMultiplier)}
+                </div>
+                <span className="text-[10px] text-[#8D867F] block font-sans">
+                  Avoided re-patching & cavitation costs
+                </span>
+              </div>
+
+              <div className="p-3 bg-[#FAF7F0] border border-[#302335]/20 space-y-1">
+                <span className="text-[11px] text-[#8D867F] uppercase block">Operational Time Saved</span>
+                <div className="text-lg sm:text-xl font-bold text-[#302335]">
+                  {formatDays(totalDaysSaved, combinedMultiplier)} Days
+                </div>
+                <span className="text-[10px] text-[#8D867F] block font-sans">
+                  ~{formatHours(totalCrewHoursSaved, combinedMultiplier)} Public Works crew-hours
+                </span>
+              </div>
+
+              <div className="p-3 bg-[#FAF7F0] border border-[#302335]/20 space-y-1">
+                <span className="text-[11px] text-[#8D867F] uppercase block">Corridor Impact Index</span>
+                <div className="flex items-baseline gap-1">
+                  <span className="text-lg sm:text-xl font-bold text-[#BD4938]">{avgImpactScore}</span>
+                  <span className="text-xs text-[#8D867F]">/100</span>
+                </div>
+                <span className="text-[10px] text-[#747D50] font-bold block">
+                  High Multi-Agency ROI
+                </span>
+              </div>
+
+              <div className="p-3 bg-[#FAF7F0] border border-[#302335]/20 space-y-1">
+                <span className="text-[11px] text-[#8D867F] uppercase block">Recurrence Suppression</span>
+                <div className="text-lg sm:text-xl font-bold text-[#D3AA57]">
+                  ~{primaryCause?.predictiveImpact?.incidentRecurrenceReductionPercent || 85}%
+                </div>
+                <span className="text-[10px] text-[#8D867F] block font-sans">
+                  Projected 24-month horizon
+                </span>
+              </div>
+            </div>
+          </div>
+        );
+      })()}
+
       {/* Candidate Root Causes & Physical Mechanisms */}
       <div className="space-y-4">
         <div className="flex items-center justify-between border-b border-[#302335] pb-2">
@@ -472,6 +629,165 @@ export const RootCauseView: React.FC = () => {
                     </ul>
                   </div>
                 </div>
+
+                {/* Predictive Municipal Impact Assessment */}
+                {cause.predictiveImpact && (
+                  <div className="border border-[#302335]/25 bg-[#FAF7F0] p-4 space-y-3 font-mono">
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-[#302335]/15 pb-2.5">
+                      <div className="flex items-center gap-2">
+                        <TrendingUp className="w-4 h-4 text-[#747D50]" />
+                        <span className="text-xs font-bold text-[#302335] uppercase tracking-wider">
+                          Predictive Impact Score & Municipal Savings Model
+                        </span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <span className="text-[11px] px-2 py-0.5 rounded uppercase font-bold bg-[#302335] text-[#FFFDF8]">
+                          {cause.predictiveImpact.impactTier} impact
+                        </span>
+                        <div className="flex items-baseline gap-1 text-xs">
+                          <span className="text-[10px] text-[#8D867F]">Score:</span>
+                          <span className="text-sm font-bold text-[#BD4938]">{cause.predictiveImpact.impactScore}</span>
+                          <span className="text-[10px] text-[#8D867F]">/100</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* KPI Matrix: Financial, Time, ROI, Recurrence */}
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-2.5 text-xs">
+                      {/* Financial Savings */}
+                      <div className="p-2.5 bg-[#FFFDF8] border border-[#302335]/15 space-y-0.5">
+                        <span className="text-[10px] text-[#8D867F] uppercase flex items-center gap-1">
+                          <Coins className="w-3 h-3 text-[#747D50]" /> Projected Cost Saved
+                        </span>
+                        <div className="text-sm font-bold text-[#747D50]">
+                          {formatINR(cause.predictiveImpact.estimatedCostSavedMin, combinedMultiplier)} –{' '}
+                          {formatINR(cause.predictiveImpact.estimatedCostSavedMax, combinedMultiplier)}
+                        </div>
+                        <span className="text-[9px] text-[#8D867F] block font-sans">
+                          vs. repeated surface patches
+                        </span>
+                      </div>
+
+                      {/* Time Saved */}
+                      <div className="p-2.5 bg-[#FFFDF8] border border-[#302335]/15 space-y-0.5">
+                        <span className="text-[10px] text-[#8D867F] uppercase flex items-center gap-1">
+                          <Clock className="w-3 h-3 text-[#302335]" /> Operational Time Saved
+                        </span>
+                        <div className="text-sm font-bold text-[#302335]">
+                          {formatDays(cause.predictiveImpact.timeSavedDays, combinedMultiplier)} Days
+                        </div>
+                        <span className="text-[9px] text-[#8D867F] block font-sans">
+                          {formatHours(cause.predictiveImpact.crewHoursSaved, combinedMultiplier)} crew dispatch hours
+                        </span>
+                      </div>
+
+                      {/* ROI Multiplier */}
+                      <div className="p-2.5 bg-[#FFFDF8] border border-[#302335]/15 space-y-0.5">
+                        <span className="text-[10px] text-[#8D867F] uppercase flex items-center gap-1">
+                          <Sparkles className="w-3 h-3 text-[#D3AA57]" /> Preventative ROI
+                        </span>
+                        <div className="text-sm font-bold text-[#BD4938]">
+                          {cause.predictiveImpact.roiMultiplier}x Return
+                        </div>
+                        <span className="text-[9px] text-[#8D867F] block font-sans">
+                          One-time fix: {formatINR(cause.predictiveImpact.rootCauseInterventionCost)}
+                        </span>
+                      </div>
+
+                      {/* Recurrence Drop */}
+                      <div className="p-2.5 bg-[#FFFDF8] border border-[#302335]/15 space-y-0.5">
+                        <span className="text-[10px] text-[#8D867F] uppercase flex items-center gap-1">
+                          <ShieldCheck className="w-3 h-3 text-[#747D50]" /> Recurrence Cut
+                        </span>
+                        <div className="text-sm font-bold text-[#747D50]">
+                          -{cause.predictiveImpact.incidentRecurrenceReductionPercent}%
+                        </div>
+                        <span className="text-[9px] text-[#8D867F] block font-sans">
+                          Complaint suppression (24m)
+                        </span>
+                      </div>
+                    </div>
+
+                    {/* Expandable Ledger Accordion for Cost & Time Breakdown */}
+                    <div className="pt-1">
+                      <button
+                        type="button"
+                        onClick={() =>
+                          setExpandedBreakdownCauseId(
+                            expandedBreakdownCauseId === cause.id ? null : cause.id
+                          )
+                        }
+                        className="flex items-center justify-between w-full text-[11px] text-[#302335] hover:text-[#BD4938] py-1 border-t border-[#302335]/10 font-bold transition-colors cursor-pointer"
+                      >
+                        <span className="flex items-center gap-1.5">
+                          <FileSpreadsheet className="w-3.5 h-3.5 text-[#8D867F]" />
+                          <span>
+                            {expandedBreakdownCauseId === cause.id ? 'Hide' : 'Inspect'} Itemized Municipal Savings Ledger & Engineering Methodology
+                          </span>
+                        </span>
+                        {expandedBreakdownCauseId === cause.id ? (
+                          <ChevronUp className="w-3.5 h-3.5" />
+                        ) : (
+                          <ChevronDown className="w-3.5 h-3.5" />
+                        )}
+                      </button>
+
+                      {expandedBreakdownCauseId === cause.id && (
+                        <div className="mt-2.5 pt-2.5 border-t border-dashed border-[#302335]/20 space-y-3">
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
+                            {/* Cost Breakdown Ledger */}
+                            <div className="p-2.5 bg-[#FFFDF8] border border-[#302335]/15 space-y-1.5">
+                              <span className="text-[10px] font-bold uppercase text-[#8D867F] block">
+                                Avoided Municipal Expenditure Items:
+                              </span>
+                              <div className="space-y-1 font-sans text-[11px]">
+                                {cause.predictiveImpact.costBreakdown.map((item, idx) => (
+                                  <div
+                                    key={idx}
+                                    className="flex items-center justify-between border-b border-[#302335]/10 pb-0.5 text-[#302335]"
+                                  >
+                                    <span>{item.label}</span>
+                                    <span className="font-mono font-bold text-[#747D50]">
+                                      {formatINR(item.amount, combinedMultiplier)}
+                                    </span>
+                                  </div>
+                                ))}
+                              </div>
+                            </div>
+
+                            {/* Time Breakdown Ledger */}
+                            <div className="p-2.5 bg-[#FFFDF8] border border-[#302335]/15 space-y-1.5">
+                              <span className="text-[10px] font-bold uppercase text-[#8D867F] block">
+                                Reclaimed Public Works Crew Time:
+                              </span>
+                              <div className="space-y-1 font-sans text-[11px]">
+                                {cause.predictiveImpact.timeBreakdown.map((item, idx) => (
+                                  <div
+                                    key={idx}
+                                    className="flex items-center justify-between border-b border-[#302335]/10 pb-0.5 text-[#302335]"
+                                  >
+                                    <span>{item.label}</span>
+                                    <span className="font-mono font-bold text-[#302335]">
+                                      {formatHours(item.hours, combinedMultiplier)} hrs
+                                    </span>
+                                  </div>
+                                ))}
+                              </div>
+                            </div>
+                          </div>
+
+                          {/* Grounding & Methodology Basis */}
+                          <div className="p-2 bg-[#FAF7F0] border border-[#302335]/10 text-[10px] font-sans text-[#8D867F] italic flex items-start gap-1.5">
+                            <span className="font-mono font-bold uppercase text-[#302335] not-italic shrink-0">
+                              Basis & Standard:
+                            </span>
+                            <span>{cause.predictiveImpact.methodologyBasis}</span>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                )}
 
                 {/* Suggested Action & Reviewer Verification Controls */}
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-3 border-t border-[#302335]/15 text-xs font-mono">
